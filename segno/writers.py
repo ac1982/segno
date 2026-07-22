@@ -1278,7 +1278,7 @@ def _hex_to_rgb_or_rgba(color, alpha_float=True):
         raise ValueError(f'Input #{color} is not in #RRGGBB nor in #RRGGBBAA format')
     res = tuple([int(color[i:i + 2], 16) for i in range(0, color_len, 2)])
     if alpha_float and color_len == 8:
-        res = res[:3] + (_alpha_value(res[3], alpha_float),)
+        res = (*res[:3], _alpha_value(res[3], alpha_float))
     return res
 
 

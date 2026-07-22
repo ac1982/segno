@@ -80,12 +80,14 @@ def _make_test_prepare_data_byte_data():
         ('12345a', consts.DEFAULT_BYTE_ENCODING),
         ('abcdef', consts.DEFAULT_BYTE_ENCODING),
     )
+    res = []
     for data, encoding in test_data:
         for mode in (None, consts.MODE_BYTE):
             for param_encoding in (None, encoding):
                 encoded_data = data.encode(encoding)
                 expected = ((encoded_data, len(encoded_data), consts.MODE_BYTE, encoding),)
-                yield expected, data, mode, param_encoding
+                res.append((expected, data, mode, param_encoding))
+    return res
 
 
 @pytest.mark.parametrize('expected, data, mode, param_encoding',
@@ -762,16 +764,15 @@ def test_score_n2_iso():
 
 
 def _make_score_n4_data():
+    res = []
     for p in range(41, 46):
-        yield 10, p
-
+        res.append((10, p))
     for p in range(55, 60):
-        yield 10, p
-
+        res.append((10, p))
     for p in range(46, 55):
-        yield 0, p
-
-    yield 3 * 10, 35
+        res.append((0, p))
+    res.append((3 * 10, 35))
+    return res
 
 
 @pytest.mark.parametrize('score, percent', _make_score_n4_data())

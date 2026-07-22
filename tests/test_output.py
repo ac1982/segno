@@ -49,21 +49,23 @@ _DATA = (
 
 
 def _make_test_data_input():
-    for kind, buffer_factory, to_matrix_func, kw in (
-        ('eps', io.StringIO, eps_as_matrix, {}),
-        ('png', io.BytesIO, png_as_matrix, {}),
-        ('svg', io.BytesIO, svg_as_matrix, {}),
-        ('txt', io.StringIO, txt_as_matrix, {}),
-        ('pdf', io.BytesIO, pdf_as_matrix, {}),
-        ('ans', io.StringIO, terminal_as_matrix, {}),
-        ('tex', io.StringIO, tex_as_matrix, {}),
-        ('xpm', io.StringIO, xpm_as_matrix, {}),
-        ('pam', io.BytesIO, pam_bw_as_matrix, {}),
-        ('pbm', io.BytesIO, pbm_p1_as_matrix, dict(plain=True)),
-        ('ppm', io.BytesIO, ppm_bw_as_matrix, {}),
-    ):
-        for data, error, border in _DATA:
-            yield kind, buffer_factory, to_matrix_func, data, error, border, kw
+    return [
+        (kind, buffer_factory, to_matrix_func, data, error, border, kw)
+        for kind, buffer_factory, to_matrix_func, kw in (
+            ('eps', io.StringIO, eps_as_matrix, {}),
+            ('png', io.BytesIO, png_as_matrix, {}),
+            ('svg', io.BytesIO, svg_as_matrix, {}),
+            ('txt', io.StringIO, txt_as_matrix, {}),
+            ('pdf', io.BytesIO, pdf_as_matrix, {}),
+            ('ans', io.StringIO, terminal_as_matrix, {}),
+            ('tex', io.StringIO, tex_as_matrix, {}),
+            ('xpm', io.StringIO, xpm_as_matrix, {}),
+            ('pam', io.BytesIO, pam_bw_as_matrix, {}),
+            ('pbm', io.BytesIO, pbm_p1_as_matrix, dict(plain=True)),
+            ('ppm', io.BytesIO, ppm_bw_as_matrix, {}),
+        )
+        for data, error, border in _DATA
+    ]
 
 
 @pytest.mark.parametrize('kind, buffer_factory, to_matrix_func, data, error, '

@@ -141,10 +141,10 @@ def encode_sequence(content, error=None, version=None, mode=None, mask=None,
                                             is_eci=eci, is_sa=True)
         capacity = consts.SYMBOL_CAPACITY[version][error]
         # Initial result does not contain the overhead of SA mode for all QR Codes
-        cnt = int(math.ceil(bit_length / capacity))
+        cnt = math.ceil(bit_length / capacity)
         # Overhead of SA mode for all QR Codes
         bit_length += 5 * 4 * (cnt - 1) + (12 * (cnt - 1) if eci else 0)
-        return int(math.ceil(bit_length / capacity))
+        return math.ceil(bit_length / capacity)
 
     version = normalize_version(version)
     if version is not None:
